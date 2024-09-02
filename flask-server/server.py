@@ -2,11 +2,12 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 
+
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 
 @app.route('/api/data', methods=['GET'])
-def get_data():
+def get_data(): 
     data = {
         "message": "Hello, this is the API endpoint"
     }
@@ -20,15 +21,10 @@ def upload_data():
     address = request.form.get('address')
     file = request.files.get('file')
 
-    # Define upload folder and ensure it exists
-    upload_folder = './uploads'
-    if not os.path.exists(upload_folder):
-        os.makedirs(upload_folder)
-
-    # Process the file if it exists
+    # Process the data as needed
+    # For example, save the file or save data to the database
     if file:
-        file_path = os.path.join(upload_folder, file.filename)
-        file.save(file_path)
+        file.save(f"./uploads/{file.filename}")
 
     return jsonify({
         "message": "Form data received",

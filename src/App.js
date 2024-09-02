@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import react, { useEffect, useState } from "react";
+import "./App.css";
+import FormComponent from "./Form.js";
 
 function App() {
+  const [data, setData] = useState({});
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/data");
+      const jsonData = await response.json();
+      setData(jsonData);
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h3>g{data.message}</h3>
+      <FormComponent />
     </div>
   );
 }
